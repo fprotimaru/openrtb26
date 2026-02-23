@@ -1,0 +1,16 @@
+[package]
+name = "openrtb26"
+version = "0.1.0"
+edition = "2021"
+description = "OpenRTB 2.6 implementation in Rust"
+license = "MIT"
+repository = "https://github.com/InteractiveAdvertisingBureau/openrtb2.x"
+keywords = ["openrtb", "rtb", "advertising", "programmatic"]
+categories = ["encoding"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[dev-dependencies]
+serde_json = "1.0"
