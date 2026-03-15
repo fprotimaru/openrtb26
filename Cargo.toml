@@ -1,6 +1,6 @@
 [package]
 name = "openrtb26"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "OpenRTB 2.6 implementation in Rust"
 license = "MIT"
