@@ -4,7 +4,9 @@ version = "0.1.0"
 edition = "2021"
 description = "OpenRTB 2.6 implementation in Rust"
 license = "MIT"
+homepage = "https://iabtechlab.com/standards/openrtb/"
 repository = "https://github.com/InteractiveAdvertisingBureau/openrtb2.x"
+readme = "README.md"
 keywords = ["openrtb", "rtb", "advertising", "programmatic"]
 categories = ["encoding"]
 
