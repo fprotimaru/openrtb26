@@ -394,7 +394,7 @@ mod tests {
 
     #[test]
     fn device_with_sua_roundtrip() {
-        use super::super::brand_version::BrandVersion;
+        use crate::user_agent::BrandVersion;
 
         let d = Device {
             ua: Some("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36".to_string()),

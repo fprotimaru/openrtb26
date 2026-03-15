@@ -9,7 +9,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use super::dur_floors::DurFloors;
+use super::source::DurFloors;
 
 // ── Deal ──────────────────────────────────────────────────────────────────────
 

@@ -39,7 +39,7 @@ use super::{content::Content, segment::Publisher};
 ///     ..Default::default()
 /// };
 /// ```
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Site {
     /// Exchange-specific site ID.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -169,7 +169,7 @@ pub struct Site {
 ///     ..Default::default()
 /// };
 /// ```
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct App {
     /// Exchange-specific app ID.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -293,7 +293,7 @@ pub struct App {
 ///     ..Default::default()
 /// };
 /// ```
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Dooh {
     /// Exchange-provided ID for a placement or logical grouping of placements.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -342,6 +342,72 @@ pub struct Dooh {
     /// Placeholder for exchange-specific extensions to OpenRTB.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ext: Option<serde_json::Value>,
+}
+
+impl Default for Site {
+    fn default() -> Self {
+        Self {
+            id: None,
+            name: None,
+            domain: None,
+            cattax: 1,
+            cat: None,
+            sectioncat: None,
+            pagecat: None,
+            page: None,
+            page_ref: None,
+            search: None,
+            mobile: None,
+            privacypolicy: None,
+            publisher: None,
+            content: None,
+            keywords: None,
+            kwarray: None,
+            inventorypartnerdomain: None,
+            ext: None,
+        }
+    }
+}
+
+impl Default for App {
+    fn default() -> Self {
+        Self {
+            id: None,
+            name: None,
+            bundle: None,
+            domain: None,
+            storeurl: None,
+            cattax: 1,
+            cat: None,
+            sectioncat: None,
+            pagecat: None,
+            ver: None,
+            privacypolicy: None,
+            paid: None,
+            publisher: None,
+            content: None,
+            keywords: None,
+            kwarray: None,
+            inventorypartnerdomain: None,
+            ext: None,
+        }
+    }
+}
+
+impl Default for Dooh {
+    fn default() -> Self {
+        Self {
+            id: None,
+            name: None,
+            venuetype: None,
+            venuetypetax: 1,
+            publisher: None,
+            domain: None,
+            keywords: None,
+            content: None,
+            ext: None,
+        }
+    }
 }
 
 // ── serde helpers ─────────────────────────────────────────────────────────────

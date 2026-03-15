@@ -60,7 +60,7 @@ use serde::{Deserialize, Serialize};
 ///     ..Default::default()
 /// };
 /// ```
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Bid {
     /// Bidder-generated bid ID to assist with logging/tracking.
     ///
@@ -277,6 +277,46 @@ pub struct Bid {
     /// Placeholder for bidder-specific extensions to OpenRTB.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ext: Option<serde_json::Value>,
+}
+
+impl Default for Bid {
+    fn default() -> Self {
+        Self {
+            id: String::new(),
+            impid: String::new(),
+            price: 0.0,
+            nurl: None,
+            burl: None,
+            lurl: None,
+            adm: None,
+            adid: None,
+            adomain: None,
+            bundle: None,
+            iurl: None,
+            cid: None,
+            crid: None,
+            tactic: None,
+            cattax: 1,
+            cat: None,
+            attr: None,
+            apis: None,
+            api: None,
+            protocol: None,
+            qagmediarating: None,
+            language: None,
+            langb: None,
+            dealid: None,
+            w: None,
+            h: None,
+            wratio: None,
+            hratio: None,
+            exp: None,
+            dur: None,
+            mtype: None,
+            slotinpod: 0,
+            ext: None,
+        }
+    }
 }
 
 // ── serde helpers ─────────────────────────────────────────────────────────────

@@ -11,7 +11,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use super::{banner::Banner, dur_floors::DurFloors};
+use super::{banner::Banner, source::DurFloors};
 
 /// Audio impression object — Section 3.2.8
 ///

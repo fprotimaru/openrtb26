@@ -10,7 +10,7 @@
 use serde::{Deserialize, Serialize};
 
 use super::{
-    audio::Audio, banner::Banner, native::Native, pmp::Pmp, qty::Qty, refresh::Refresh,
+    audio::Audio, banner::Banner, native::Native, pmp::Pmp, source::Qty, segment::Refresh,
     video::Video,
 };
 
@@ -50,7 +50,7 @@ pub struct Metric {
 /// impressions.  At least one of `banner`, `video`, `audio`, or `native`
 /// must be present to define the type(s) of impression being offered.
 /// Any given bid must conform to exactly one of the offered types.
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Imp {
     /// Unique identifier for this impression within the bid request.
     /// Typically starts at `"1"` and increments.
@@ -160,6 +160,36 @@ pub struct Imp {
     /// Placeholder for exchange-specific extensions to OpenRTB.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ext: Option<serde_json::Value>,
+}
+
+impl Default for Imp {
+    fn default() -> Self {
+        Self {
+            id: String::new(),
+            metric: None,
+            banner: None,
+            video: None,
+            audio: None,
+            native: None,
+            pmp: None,
+            displaymanager: None,
+            displaymanagerver: None,
+            instl: 0,
+            tagid: None,
+            bidfloor: None,
+            bidfloorcur: "USD".to_string(),
+            clickbrowser: None,
+            secure: None,
+            iframebuster: None,
+            rwdd: 0,
+            ssai: 0,
+            exp: None,
+            qty: None,
+            dt: None,
+            refresh: None,
+            ext: None,
+        }
+    }
 }
 
 // ── serde helpers ─────────────────────────────────────────────────────────────

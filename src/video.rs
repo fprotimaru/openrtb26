@@ -11,13 +11,13 @@
 
 use serde::{Deserialize, Serialize};
 
-use super::{banner::Banner, dur_floors::DurFloors};
+use super::{banner::Banner, source::DurFloors};
 
 /// Video impression object — Section 3.2.7
 ///
 /// Many fields are non-essential for minimally viable transactions but are
 /// included to offer fine control when needed.
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Video {
     /// Content MIME types supported (e.g., `"video/mp4"`). **Required.**
     pub mimes: Vec<String>,
@@ -188,6 +188,47 @@ pub struct Video {
     /// Placeholder for exchange-specific extensions to OpenRTB.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ext: Option<serde_json::Value>,
+}
+
+impl Default for Video {
+    fn default() -> Self {
+        Self {
+            mimes: vec![],
+            minduration: None,
+            maxduration: None,
+            protocols: None,
+            w: None,
+            h: None,
+            startdelay: None,
+            plcmt: None,
+            linearity: None,
+            skip: None,
+            skipmin: 0,
+            skipafter: 0,
+            rqddurs: None,
+            podid: None,
+            podseq: 0,
+            maxseq: None,
+            poddur: None,
+            slotinpod: 0,
+            mincpmpersec: None,
+            battr: None,
+            maxextended: None,
+            minbitrate: None,
+            maxbitrate: None,
+            boxingallowed: 1,
+            playbackmethod: None,
+            playbackend: None,
+            delivery: None,
+            pos: None,
+            companionad: None,
+            api: None,
+            companiontype: None,
+            poddedupe: None,
+            durfloors: None,
+            ext: None,
+        }
+    }
 }
 
 // ── serde helpers ─────────────────────────────────────────────────────────────

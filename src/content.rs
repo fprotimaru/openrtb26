@@ -9,7 +9,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use super::{channel::Channel, data::Data, network::Network, producer::Producer};
+use super::segment::{Channel, Data, Network, Producer};
 
 /// Content in which the impression will appear — Section 3.2.16
 ///
@@ -28,7 +28,7 @@ use super::{channel::Channel, data::Data, network::Network, producer::Producer};
 ///     ..Default::default()
 /// };
 /// ```
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Content {
     /// Publisher-provided ID uniquely identifying the content.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -202,6 +202,45 @@ pub struct Content {
     pub ext: Option<serde_json::Value>,
 }
 
+impl Default for Content {
+    fn default() -> Self {
+        Self {
+            id: None,
+            episode: None,
+            title: None,
+            series: None,
+            season: None,
+            artist: None,
+            genre: None,
+            gtax: 1,
+            genres: None,
+            album: None,
+            isrc: None,
+            producer: None,
+            url: None,
+            cattax: 1,
+            cat: None,
+            prodq: None,
+            context: None,
+            contentrating: None,
+            userrating: None,
+            qagmediarating: None,
+            keywords: None,
+            kwarray: None,
+            livestream: None,
+            sourcerelationship: None,
+            len: None,
+            language: None,
+            langb: None,
+            embeddable: None,
+            data: None,
+            network: None,
+            channel: None,
+            ext: None,
+        }
+    }
+}
+
 // ── serde helpers ─────────────────────────────────────────────────────────────
 
 fn default_cattax() -> i32 {
@@ -213,11 +252,11 @@ fn is_default_cattax(v: &i32) -> bool {
 }
 
 fn default_gtax() -> i32 {
-    9
+    1
 }
 
 fn is_default_gtax(v: &i32) -> bool {
-    *v == 9
+    *v == 1
 }
 
 // ── tests ─────────────────────────────────────────────────────────────────────
@@ -345,7 +384,7 @@ mod tests {
 
     #[test]
     fn content_with_data_roundtrip() {
-        use super::super::segment::{Data, Segment};
+        use crate::segment::{Data, Segment};
         let c = Content {
             data: Some(vec![Data {
                 id: Some("dp-1".to_string()),
