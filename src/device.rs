@@ -9,6 +9,37 @@ use serde::{Deserialize, Serialize};
 
 use super::{geo::Geo, user_agent::UserAgent};
 
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
+#[serde(try_from = "u8", into = "u8")]
+pub enum DeviceType {
+    Mobile = 1,
+    Pc = 2,
+    Ctv = 3,
+    Phone = 4,
+    Tablet = 5,
+    Other = 0,
+}
+
+impl TryFrom<u8> for DeviceType {
+    type Error = &'static str;
+    fn try_from(v: u8) -> Result<Self, &'static str> {
+        Ok(match v {
+            1 => Self::Mobile,
+            2 => Self::Pc,
+            3 => Self::Ctv,
+            4 => Self::Phone,
+            5 => Self::Tablet,
+            _ => Self::Other,
+        })
+    }
+}
+
+impl From<DeviceType> for u8 {
+    fn from(d: DeviceType) -> u8 {
+        d as u8
+    }
+}
+
 /// Device information — Section 3.2.18
 ///
 /// # Deprecation notice
@@ -33,7 +64,7 @@ use super::{geo::Geo, user_agent::UserAgent};
 ///
 /// # Example
 /// ```rust
-/// use openrtb26::Device;
+/// use openrtb26::{Device, DeviceType};
 ///
 /// let device = Device {
 ///     ua: Some("Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X)".to_string()),
@@ -41,7 +72,7 @@ use super::{geo::Geo, user_agent::UserAgent};
 ///     model: Some("iPhone".to_string()),
 ///     os: Some("iOS".to_string()),
 ///     osv: Some("16.0".to_string()),
-///     devicetype: Some(4),
+///     devicetype: Some(DeviceType::Phone),
 ///     ifa: Some("AA000DFE74168477C70D291f574D344790E0BB11".to_string()),
 ///     ..Default::default()
 /// };
@@ -94,20 +125,8 @@ pub struct Device {
     pub ipv6: Option<String>,
 
     /// The general type of device.
-    ///
-    /// Refer to AdCOM 1.0 List: Device Types.
-    ///
-    /// | Value | Meaning |
-    /// |-------|---------|
-    /// | 1 | Mobile / Tablet |
-    /// | 2 | Personal Computer |
-    /// | 3 | Connected TV |
-    /// | 4 | Phone |
-    /// | 5 | Tablet |
-    /// | 6 | Connected Device |
-    /// | 7 | Set Top Box |
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub devicetype: Option<i32>,
+    pub devicetype: Option<DeviceType>,
 
     /// Device make / manufacturer (e.g., `"Apple"`, `"Samsung"`).
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -271,7 +290,7 @@ mod tests {
             model: Some("iPhone".to_string()),
             os: Some("iOS".to_string()),
             osv: Some("6.1".to_string()),
-            devicetype: Some(4),
+            devicetype: Some(DeviceType::Mobile),
             js: Some(1),
             connectiontype: Some(3),
             ..Default::default()
@@ -282,7 +301,7 @@ mod tests {
         assert!(json.contains("\"make\":\"Apple\""));
         assert!(json.contains("\"model\":\"iPhone\""));
         assert!(json.contains("\"os\":\"iOS\""));
-        assert!(json.contains("\"devicetype\":4"));
+        assert!(json.contains("\"devicetype\":1"));
         let decoded: Device = serde_json::from_str(&json).unwrap();
         assert_eq!(d, decoded);
     }
@@ -475,7 +494,7 @@ mod tests {
         assert_eq!(d.language.as_deref(), Some("en"));
         assert_eq!(d.js, Some(1));
         assert_eq!(d.connectiontype, Some(3));
-        assert_eq!(d.devicetype, Some(1));
+        assert_eq!(d.devicetype, Some(DeviceType::Mobile));
     }
 
     /// Replicates the device object from spec Example 4 (desktop with UA).

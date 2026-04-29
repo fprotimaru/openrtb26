@@ -40,7 +40,7 @@ pub use audio::Audio;
 pub use banner::Banner;
 pub use bid::Bid;
 pub use content::Content;
-pub use device::Device;
+pub use device::{Device, DeviceType};
 pub use eid::{Eid, Uid};
 pub use format::Format;
 pub use geo::Geo;
@@ -48,7 +48,9 @@ pub use imp::{Imp, Metric};
 pub use native::Native;
 pub use pmp::{Deal, Pmp};
 pub use seat_bid::SeatBid;
-pub use segment::{Channel, Data, Network, Producer, Publisher, Refresh, RefSettings, Segment, User};
+pub use segment::{
+    Channel, Data, Network, Producer, Publisher, RefSettings, Refresh, Segment, User,
+};
 pub use site::{App, Dooh, Site};
 pub use source::{DurFloors, Qty, Regs, Source};
 pub use supply_chain::{SupplyChain, SupplyChainNode};
